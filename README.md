@@ -18,3 +18,8 @@ Open a Terminal and run the following commands(runs on port 8000):
 `python3 manage.py migrate`
 
 `python3 manage.py runserver`
+
+
+You can access the documentation at 
+
+`http://127.0.0.1:8000/swagger/`
