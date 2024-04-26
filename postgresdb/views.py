@@ -17,6 +17,17 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
+        """"Returns the queryset of all items or filtered by category_id if provided."
+        Parameters:
+            - self (object): The current instance of the class.
+            - category_id (int): The ID of the category to filter by, if provided.
+        Returns:
+            - queryset (object): The queryset of all items or filtered by category_id if provided.
+        Processing Logic:
+            - Get all items from the Item model.
+            - Get the category_id from the request query parameters.
+            - If category_id is provided, filter the queryset by that category.
+            - Return the filtered or unfiltered queryset."""
         queryset = Item.objects.all()
         category_id = self.request.query_params.get('category', None)
 
@@ -42,6 +53,18 @@ class UserRegistrationView(views.APIView):
 
 class LoginView(views.APIView):
     def post(self, request, *args, **kwargs):
+        """This function handles user login and returns a response based on the validity of the serializer.
+        Parameters:
+            - request (HttpRequest): The HTTP request sent by the user.
+            - args (list): Optional arguments.
+            - kwargs (dict): Optional keyword arguments.
+        Returns:
+            - Response (HttpResponse): A response containing a message and status code.
+        Processing Logic:
+            - Validate the serializer data.
+            - Retrieve the validated user data.
+            - Create or return a token.
+            - Return a response with a success message and status code if valid, or errors and status code if invalid."""
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data

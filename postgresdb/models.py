@@ -20,6 +20,18 @@ class Item(models.Model):
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
+        """Creates a new user with the given email, username, and password.
+        Parameters:
+            - email (str): User's email address.
+            - username (str): User's desired username.
+            - password (str): User's desired password. Defaults to None.
+        Returns:
+            - User: Newly created user object.
+        Processing Logic:
+            - Raises error if email or username is missing.
+            - Normalizes email address.
+            - Sets password for user.
+            - Saves user to database."""
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
@@ -35,6 +47,17 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, username, password):
+        """Creates a superuser with given credentials.
+        Parameters:
+            - email (str): Email address of the user.
+            - username (str): Username of the user.
+            - password (str): Password of the user.
+        Returns:
+            - user (User): Newly created superuser.
+        Processing Logic:
+            - Create user with given credentials.
+            - Set user as admin, staff, and superuser.
+            - Save user using the default database."""
         user = self.create_user(
             email,
             password=password,
